@@ -3,11 +3,10 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Grimoire',
   description: 'Self-hosted TTRPG library manager — documentation',
-  base: '/grimoire/',
   ignoreDeadLinks: [/^http:\/\/localhost/],
 
   head: [
-    ['link', { rel: 'icon', type: 'image/png', href: '/grimoire/favicon.png' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
   ],
 
   themeConfig: {
