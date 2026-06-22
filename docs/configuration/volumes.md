@@ -5,17 +5,17 @@ Grimoire needs two volume mounts:
 ```yaml
 volumes:
   # Your library — read-only is safe and recommended
-  - /path/to/your/library:/library:ro
+  - /path/to/your/library:/app/library:ro
 
   # Persistent data (database, thumbnails, page cache)
-  - /path/to/grimoire/data:/data
+  - /path/to/grimoire/data:/app/data
 ```
 
 ## Library volume
 
 Mount your TTRPG library folder here. Grimoire never modifies your files, so `:ro` (read-only) is recommended.
 
-The path inside the container defaults to `/library`. If you change it, also set `LIBRARY_PATH` to match:
+The path inside the container defaults to `/app/library`. If you change it, also set `LIBRARY_PATH` to match:
 
 ```yaml
 environment:
@@ -37,7 +37,7 @@ Grimoire stores all persistent data here:
 
 **Back this directory up** to preserve your metadata, user accounts, and bookmarks.
 
-The path inside the container defaults to `/data`. If you change it, also set `DATA_PATH`:
+The path inside the container defaults to `/app/data`. If you change it, also set `DATA_PATH`:
 
 ```yaml
 environment:

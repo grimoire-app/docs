@@ -39,12 +39,12 @@ Grimoire expects a `books/` subfolder at the root of the library mount:
 
 If your PDFs live directly under the mounted folder without a `books/` subfolder, the scanner finds nothing.
 
-**Fix** — mount your folder directly as `/library/books`:
+**Fix** — mount your folder directly as `/app/library/books`:
 
 ```yaml
 volumes:
-  - /path/to/your/rpgs:/library/books:ro
-  - /path/to/grimoire/data:/data
+  - /path/to/your/rpgs:/app/library/books:ro
+  - /path/to/grimoire/data:/app/data
 ```
 
 This keeps your existing host structure without adding an extra `books/` folder. Restart the stack and trigger a rescan.

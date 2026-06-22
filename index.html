@@ -158,8 +158,15 @@
     box-shadow:0 0 8px rgba(201,168,76,0.55);
   }
 
-  /* ---- documentation link ---- */
+  /* ---- cta buttons ---- */
+  .cta-row{
+    display:flex; gap:1rem;
+    width:100%;
+    opacity:0; animation:rise 1s ease 1.65s forwards;
+  }
+
   .doc{
+    flex:1; text-align:center;
     font-family:'Alegreya Sans', sans-serif;
     font-size:clamp(.8rem,1.9vw,.92rem);
     font-weight:500;
@@ -171,7 +178,6 @@
     border:1px solid rgba(201,168,76,0.45);
     background:rgba(201,168,76,0.04);
     transition:color .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease, transform .35s ease;
-    opacity:0; animation:rise 1s ease 1.65s forwards;
   }
   .doc:hover, .doc:focus-visible{
     color:#fff4d6;
@@ -221,7 +227,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; }
-    .crest,.eyebrow,h1,.tagline,.divider,.doc,.links,.frame{ opacity:1 !important; transform:none !important; }
+    .crest,.eyebrow,h1,.tagline,.divider,.cta-row,.links,.frame{ opacity:1 !important; transform:none !important; }
     .crest .logo{ transform:translate(-50%,-50%) !important; }
     .mote{ display:none; }
   }
@@ -282,7 +288,10 @@
       <span class="line"></span><span class="pip"></span><span class="line"></span>
     </div>
 
-    <a class="doc" href="https://docs.grimoirecodex.org">Documentation</a>
+    <div class="cta-row">
+      <a class="doc" href="https://docs.grimoirecodex.org">Documentation</a>
+      <a class="doc" href="https://demo.grimoirecodex.org">Demo</a>
+    </div>
 
     <nav class="links" aria-label="Project links">
       <a href="https://github.com/hunter-read/grimoire" aria-label="GitHub repository" title="GitHub" rel="noopener" target="_blank">
