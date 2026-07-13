@@ -32,9 +32,12 @@ features:
   - icon: 🗺️
     title: Map Gallery
     details: Browse battlemaps by directory with tag filtering, grid metadata, and full-resolution download.
+  - icon: 🔊
+    title: Audio Library
+    details: Browse ambient tracks, music, and sound effects by folder with a persistent global player that keeps playing as you navigate.
   - icon: 🎭
     title: Campaigns
-    details: Track GM-run and personal campaigns with session notes, player notes, linked resources, and scheduling.
+    details: Track GM-run and personal campaigns with a markdown notes wiki, character sheets, linked resources, guest invites, and scheduling.
   - icon: 📡
     title: OPDS Catalog
     details: Each user can generate a personal OPDS feed URL to connect e-reader apps directly to their library.

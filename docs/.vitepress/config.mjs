@@ -41,6 +41,7 @@ export default defineConfig({
           items: [
             { text: 'Reader', link: '/guide/reader' },
             { text: 'Search', link: '/guide/search' },
+            { text: 'Audio Library', link: '/guide/audio' },
             { text: 'Campaigns', link: '/guide/campaigns' },
             { text: 'OPDS', link: '/guide/opds' },
             { text: 'User Roles', link: '/guide/user-roles' },
@@ -51,6 +52,7 @@ export default defineConfig({
           items: [
             { text: 'OpenID Connect', link: '/guide/oidc' },
             { text: 'Authentik Setup', link: '/guide/oidc-authentik' },
+            { text: 'Guest Access', link: '/guide/guest-access' },
           ],
         },
       ],
@@ -62,6 +64,7 @@ export default defineConfig({
             { text: 'Volumes', link: '/configuration/volumes' },
             { text: 'Pre-seeding Users', link: '/configuration/users' },
             { text: 'Performance', link: '/configuration/performance' },
+            { text: 'Security', link: '/configuration/security' },
           ],
         },
       ],

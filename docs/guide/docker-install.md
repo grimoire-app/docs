@@ -125,6 +125,14 @@ docker compose up -d
 
 Then open [http://localhost:9481](http://localhost:9481) in your browser.
 
+::: tip Checking container health
+The image ships a `HEALTHCHECK` that probes `GET /api/health`, so `docker ps` shows `(healthy)` or `(unhealthy)` rather than just "running" once the app is serving and can reach its database. Orchestrators can gate startup on it with `depends_on: { grimoire: { condition: service_healthy } }`.
+:::
+
+::: info Image variants
+The default `latest` tag bundles the Tesseract OCR engine so scanned, image-only PDFs are searchable. For a smaller image without OCR, use the matching `-slim` tag (e.g. `hunterreadca/grimoire:slim`). See [OCR](/configuration/performance#ocr).
+:::
+
 ## Step 5 — Create your admin account
 
 On first visit you'll be prompted to create an admin account. Pick a username and password.

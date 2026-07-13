@@ -20,14 +20,34 @@
 
 | Variable | Default | Description |
 |---|---|---|
-| `VALKEY_URL` | — | Redis-compatible cache URL for rendered page images (e.g. `redis://valkey:6379/0`). Falls back to disk cache when unset. |
+| `VALKEY_URL` | — | Redis-compatible cache URL for rendered page images (e.g. `redis://valkey:6379/0`). Falls back to disk cache when unset. Also shares auth rate-limit counters across replicas — see [Security](/configuration/security). |
 | `OPDS_ENABLED` | `false` | Set to `true` to enable the OPDS catalog. |
+
+## OCR
+
+Image-only PDFs (scanned books with no embedded text) can be run through the bundled Tesseract engine so their text is added to the search index. See [Performance → OCR](/configuration/performance#ocr).
+
+| Variable | Default | Description |
+|---|---|---|
+| `OCR_ENABLED` | `true` | Set to `false` to disable OCR of image-only PDFs even on the OCR-capable image. Automatically off on `-slim` images (which omit Tesseract). |
+| `OCR_LANGUAGES` | `eng` | `+`-joined Tesseract language codes, e.g. `eng` or `eng+deu+fra`. Extra languages require their `.traineddata` files to be present in the image's tessdata directory. |
 
 ## Authentication
 
 | Variable | Description |
 |---|---|
 | `ALLOW_PASSWORD_AUTHENTICATION` | `true` or `false`. Pins password authentication on or off, overriding the in-app toggle (which is shown read-only). First-run admin setup always requires a password regardless of this value. |
+| `GUEST_ACCESS_ENABLED` | `true` or `false`. Pins guest invite codes on or off, overriding the in-app toggle (shown read-only). Off by default. See [Guest Access](/guide/guest-access). |
+
+## Security
+
+Per-IP rate limiting on the credential-checking endpoints, plus security headers. See [Security](/configuration/security) for the full explanation.
+
+| Variable | Default | Description |
+|---|---|---|
+| `AUTH_RATE_LIMIT` | `10/minute` | Per-IP throttle on `/api/auth/login`, `/api/auth/setup`, `/api/auth/guest-login`, and `/api/stats`. Exceeding it returns `429`. Uses a [`limits`](https://limits.readthedocs.io/en/stable/quickstart.html#rate-limit-string-notation) string like `20/minute` or `100/hour`. |
+| `RATE_LIMIT_ENABLED` | `true` | Set to `false` to disable auth rate limiting entirely. |
+| `TRUST_FORWARDED_FOR` | `true` | When `true`, the limiter keys on the left-most `X-Forwarded-For` address so each client gets its own bucket behind a reverse proxy. Set to `false` only if Grimoire is exposed directly, so a spoofed header can't sidestep the limit. |
 
 ## OIDC
 
