@@ -44,6 +44,7 @@ export default defineConfig({
             { text: 'Audio Library', link: '/guide/audio' },
             { text: 'Campaigns', link: '/guide/campaigns' },
             { text: 'OPDS', link: '/guide/opds' },
+            { text: 'Homepage Widget', link: '/guide/homepage' },
             { text: 'User Roles', link: '/guide/user-roles' },
           ],
         },
