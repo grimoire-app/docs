@@ -39,6 +39,11 @@
           <input type="number" v-model.number="form.workers" min="1" max="16" />
         </div>
       </div>
+      <label class="cg-toggle" style="margin-top: 0.75rem;">
+        <input type="checkbox" v-model="form.slimImage" />
+        <span>Slim image <span class="cg-hint">(smaller, no Tesseract / OCR — uses the <code>-slim</code> tag)</span></span>
+      </label>
+      <p class="cg-note">Resolved image: <code>{{ imageRef }}</code></p>
     </section>
 
     <!-- Paths -->
@@ -77,12 +82,24 @@
     <!-- Optional: base URL -->
     <section class="cg-section">
       <h2>Optional settings</h2>
-      <div class="cg-field">
-        <label>
-          Base URL
-          <span class="cg-hint">(set this when running behind a reverse proxy; used for OPDS and OIDC redirect URIs)</span>
-        </label>
-        <input v-model="form.baseUrl" placeholder="https://grimoire.example.com" />
+      <div class="cg-row">
+        <div class="cg-field">
+          <label>
+            Base URL
+            <span class="cg-hint">(set this when running behind a reverse proxy; used for OPDS and OIDC redirect URIs)</span>
+          </label>
+          <input v-model="form.baseUrl" placeholder="https://grimoire.example.com" />
+        </div>
+        <div class="cg-field">
+          <label>Log level</label>
+          <select v-model="form.logLevel">
+            <option value="debug">debug</option>
+            <option value="info">info</option>
+            <option value="warning">warning</option>
+            <option value="error">error</option>
+            <option value="critical">critical</option>
+          </select>
+        </div>
       </div>
       <div class="cg-toggles">
         <label class="cg-toggle">
@@ -93,6 +110,68 @@
           <input type="checkbox" v-model="form.valkeyEnabled" />
           <span>Valkey page cache <span class="cg-hint">(recommended for large libraries)</span></span>
         </label>
+      </div>
+    </section>
+
+    <!-- Authentication -->
+    <section class="cg-section">
+      <h2>Authentication <span class="cg-hint optional">(optional)</span></h2>
+      <p class="cg-desc">
+        These pin auth behaviour via environment variables, overriding the in-app toggles (which then show read-only).
+        Leave them alone to manage everything from <strong>Settings → Authentication</strong> in the app.
+      </p>
+      <div class="cg-toggles">
+        <label class="cg-toggle">
+          <input type="checkbox" v-model="form.guestAccessEnabled" />
+          <span>Enable guest access <span class="cg-hint">(per-campaign invite codes for players without accounts)</span></span>
+        </label>
+      </div>
+      <div class="cg-field" style="margin-top: 0.75rem; max-width: 320px;">
+        <label>Password authentication</label>
+        <select v-model="form.passwordAuth">
+          <option value="default">App default (manage in-app)</option>
+          <option value="on">Force on</option>
+          <option value="off">Force off (OIDC only)</option>
+        </select>
+        <span v-if="form.passwordAuth === 'off'" class="cg-hint">
+          First-run admin setup still requires a password. Configure OIDC in-app or via env vars before disabling.
+        </span>
+      </div>
+    </section>
+
+    <!-- OCR -->
+    <section v-if="!form.slimImage" class="cg-section">
+      <h2>OCR <span class="cg-hint optional">(scanned / image-only PDFs)</span></h2>
+      <p class="cg-desc">
+        Scanned PDFs with no text layer are run through OCR in the background so they become searchable.
+        Bundled with the default image; omitted from <code>-slim</code> tags.
+      </p>
+      <div class="cg-radio-group">
+        <label v-for="m in ocrModes" :key="m.value" :class="['cg-radio', { active: form.ocrMode === m.value }]">
+          <input type="radio" :value="m.value" v-model="form.ocrMode" />
+          <span class="cg-radio-label">{{ m.label }}</span>
+          <span class="cg-radio-desc">{{ m.desc }}</span>
+        </label>
+      </div>
+      <div v-if="form.ocrMode === 'custom'" class="cg-sub-fields">
+        <div class="cg-row">
+          <div class="cg-field">
+            <label>Languages <span class="cg-hint">(+-joined Tesseract codes)</span></label>
+            <input v-model="form.ocrLanguages" placeholder="eng or eng+deu+fra" />
+          </div>
+          <div class="cg-field">
+            <label>Concurrency <span class="cg-hint">(books at once; ~250–400 MB RAM each)</span></label>
+            <input type="number" v-model.number="form.ocrConcurrency" min="1" max="32" />
+          </div>
+          <div class="cg-field">
+            <label>DPI <span class="cg-hint">(render resolution, 72–600)</span></label>
+            <input type="number" v-model.number="form.ocrDpi" min="72" max="600" step="10" />
+          </div>
+        </div>
+        <p class="cg-note">
+          Raise concurrency on multi-core hosts with spare RAM; keep it at 1 on small devices.
+          Higher DPI improves faint scans but is slower and heavier.
+        </p>
       </div>
     </section>
 
@@ -167,6 +246,7 @@ const form = reactive({
   runtime: 'docker',
   imageTag: 'latest',
   customTag: '',
+  slimImage: false,
   hostPort: 9481,
   workers: 2,
   libraryPath: '/path/to/your/library',
@@ -174,8 +254,15 @@ const form = reactive({
   secretKey: '',
   showSecret: false,
   baseUrl: '',
+  logLevel: 'info',
   opdsEnabled: false,
   valkeyEnabled: false,
+  guestAccessEnabled: false,
+  passwordAuth: 'default',
+  ocrMode: 'default',
+  ocrLanguages: 'eng',
+  ocrConcurrency: 1,
+  ocrDpi: 150,
   fileManager: 'none',
   puid: 1000,
   pgid: 1000,
@@ -193,6 +280,12 @@ const runtimes = [
   { value: 'docker', label: 'Docker Compose', desc: 'docker-compose.yml' },
   { value: 'podman', label: 'Podman Compose', desc: 'podman-compose.yml (compatible with docker compose)' },
   { value: 'quadlet', label: 'Podman Quadlets', desc: 'Systemd .container unit files (recommended for rootless Podman)' },
+]
+
+const ocrModes = [
+  { value: 'default', label: 'Default', desc: 'OCR on with built-in defaults (English, 1 book at a time, 150 DPI)' },
+  { value: 'custom', label: 'Customize…', desc: 'Set languages, parallelism, and render resolution' },
+  { value: 'disabled', label: 'Disabled', desc: 'Turn OCR off (scanned PDFs stay unindexed)' },
 ]
 
 const fileManagers = [
@@ -242,11 +335,36 @@ onMounted(() => {
 // ── Computed image ref ───────────────────────────────────────────────────────
 
 const imageRef = computed(() => {
-  const tag = form.imageTag === 'custom' ? (form.customTag || 'latest') : form.imageTag
+  const base = form.imageTag === 'custom' ? (form.customTag || 'latest') : form.imageTag
+  const tag = form.slimImage ? `${base}-slim` : base
   return `hunterreadca/grimoire:${tag}`
 })
 
 // ── Compose generation ───────────────────────────────────────────────────────
+
+// Env vars beyond the always-present core, as [KEY, value] pairs. Shared by the
+// compose and quadlet generators so both stay in sync.
+function extraEnvPairs() {
+  const pairs = []
+  if (form.baseUrl) pairs.push(['BASE_URL', form.baseUrl])
+  if (form.logLevel && form.logLevel !== 'info') pairs.push(['LOG_LEVEL', form.logLevel])
+  if (form.opdsEnabled) pairs.push(['OPDS_ENABLED', 'true'])
+  if (form.valkeyEnabled) pairs.push(['VALKEY_URL', 'redis://valkey:6379/0'])
+  if (form.guestAccessEnabled) pairs.push(['GUEST_ACCESS_ENABLED', 'true'])
+  if (form.passwordAuth === 'on') pairs.push(['ALLOW_PASSWORD_AUTHENTICATION', 'true'])
+  else if (form.passwordAuth === 'off') pairs.push(['ALLOW_PASSWORD_AUTHENTICATION', 'false'])
+  // OCR settings only apply to the OCR-capable (non-slim) image.
+  if (!form.slimImage) {
+    if (form.ocrMode === 'disabled') {
+      pairs.push(['OCR_ENABLED', 'false'])
+    } else if (form.ocrMode === 'custom') {
+      if (form.ocrLanguages && form.ocrLanguages !== 'eng') pairs.push(['OCR_LANGUAGES', form.ocrLanguages])
+      if (Number(form.ocrConcurrency) !== 1) pairs.push(['OCR_CONCURRENCY', String(form.ocrConcurrency)])
+      if (Number(form.ocrDpi) !== 150) pairs.push(['OCR_DPI', String(form.ocrDpi)])
+    }
+  }
+  return pairs
+}
 
 function envBlock(indent = '      ') {
   const lines = [
@@ -255,9 +373,7 @@ function envBlock(indent = '      ') {
     `${indent}- WORKERS=${form.workers}`,
     `${indent}- SECRET_KEY=${form.secretKey || 'change-me'}`,
   ]
-  if (form.baseUrl) lines.push(`${indent}- BASE_URL=${form.baseUrl}`)
-  if (form.opdsEnabled) lines.push(`${indent}- OPDS_ENABLED=true`)
-  if (form.valkeyEnabled) lines.push(`${indent}- VALKEY_URL=redis://valkey:6379/0`)
+  for (const [k, v] of extraEnvPairs()) lines.push(`${indent}- ${k}=${v}`)
   return lines.join('\n')
 }
 
@@ -394,9 +510,7 @@ function buildQuadletGrimoire() {
     `Environment=WORKERS=${form.workers}`,
     `Environment=SECRET_KEY=${form.secretKey || 'change-me'}`,
   ]
-  if (form.baseUrl) envLines.push(`Environment=BASE_URL=${form.baseUrl}`)
-  if (form.opdsEnabled) envLines.push(`Environment=OPDS_ENABLED=true`)
-  if (form.valkeyEnabled) envLines.push(`Environment=VALKEY_URL=redis://valkey:6379/0`)
+  for (const [k, v] of extraEnvPairs()) envLines.push(`Environment=${k}=${v}`)
 
   const deps = []
   if (form.valkeyEnabled) deps.push('After=valkey.service')

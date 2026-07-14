@@ -31,6 +31,8 @@ Image-only PDFs (scanned books with no embedded text) can be run through the bun
 |---|---|---|
 | `OCR_ENABLED` | `true` | Set to `false` to disable OCR of image-only PDFs even on the OCR-capable image. Automatically off on `-slim` images (which omit Tesseract). |
 | `OCR_LANGUAGES` | `eng` | `+`-joined Tesseract language codes, e.g. `eng` or `eng+deu+fra`. Extra languages require their `.traineddata` files to be present in the image's tessdata directory. |
+| `OCR_CONCURRENCY` | `1` | Number of scanned books OCR'd in parallel by the background OCR worker. Raise on multi-core hosts with spare CPU/RAM; keep at `1` on small devices. Set to `0` to turn OCR off entirely (same effect as `OCR_ENABLED=false`) — a runtime off switch for hosts hitting repeated OCR errors or out-of-memory kills. |
+| `OCR_DPI` | `150` | Resolution (clamped 72–600) scanned pages are rasterized at before OCR. Higher improves recognition on faint scans but is slower and uses more memory per page; lower is faster and lighter. |
 
 ## Authentication
 

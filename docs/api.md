@@ -157,6 +157,7 @@ Homepage shows up to four fields per row; pick the counts you care about from th
 | `/api/books` | GET | any | Paginated book list. Query: `system_id`, `category`, `limit` (max 500), `offset` |
 | `/api/books/:id` | GET | any | Book detail |
 | `/api/books/:id` | PATCH | gm/admin | Update book metadata |
+| `/api/books/:id/reindex` | POST | gm/admin | Re-run OCR on a scanned book. Optional query `ocr_dpi` (72–600) re-reads it at a higher resolution than the global `OCR_DPI`. Clears the search index and re-queues the book (OCR runs in the background). 400 for books with an embedded text layer. |
 | `/api/books/:id/file` | GET | any | Download/stream the file |
 | `/api/books/:id/thumbnail` | GET | any | WebP cover thumbnail |
 | `/api/books/:id/toc` | GET | any | PDF table of contents |

@@ -1,0 +1,93 @@
+# OCR (Scanned Books)
+
+Some PDFs are just scanned page images with no embedded text layer. This is common with older, out-of-print, or home-scanned books. Because there's no text to read, they can't be full-text searched on their own and show an **Image Only** badge in the library.
+
+Grimoire's default image bundles the [Tesseract](https://github.com/tesseract-ocr/tesseract) OCR engine (English), which "reads" the scanned pages and adds the recognised text to the search index. Once a book has been through OCR it shows an **OCR** badge and its pages become searchable like any other book. No extra container or service is required.
+
+## How it works
+
+OCR runs quietly in the background, so it never holds up the rest of your library:
+
+1. A scan first indexes all your regular (text-based) books, maps, tokens, and audio. These are searchable right away.
+2. Any scanned book with no text layer is queued for OCR and processed afterward, one page at a time.
+3. Progress is saved as each page is read. If the server restarts, or you stop and restart a scan, OCR picks up exactly where it left off instead of starting the book over. Even a very large scanned book will finish, however long it takes.
+
+You can watch the OCR queue drain under an **OCR** phase in the scan status (**Settings → Maintenance**), which shows a progress bar and the book currently being processed.
+
+Even with a big collection of scanned books, only the OCR queue is affected: the rest of your library stays fully available and searchable while OCR works through the backlog.
+
+## Enabling and disabling
+
+OCR is on by default on the standard image. There are two ways to turn it off:
+
+- Set `OCR_ENABLED=false`, or
+- Set `OCR_CONCURRENCY=0` (a convenient off switch if OCR keeps erroring or running your machine out of memory and you just want it to stop).
+
+Either way, scanned PDFs are simply left unindexed, exactly as they were before OCR existed. Any books already queued for OCR are left untouched and will resume if you re-enable it later.
+
+## Slim image (no OCR)
+
+If you don't want the Tesseract engine and its language data in your image, use the **`-slim`** tags (e.g. `hunterreadca/grimoire:slim`, `hunterreadca/grimoire:1.5.0-slim`). These omit Tesseract for a smaller image. OCR is automatically disabled there and Grimoire degrades gracefully: scanned PDFs keep the **Image Only** badge and everything else works normally.
+
+The [Compose Generator](/compose-generator) has a **Grimoire image** option to select the slim variant, which pins the correct `-slim` tag for you.
+
+If you later switch from a slim image to the standard one (or enable OCR), any books previously skipped as image-only are automatically queued for OCR on the next startup scan.
+
+## Adding languages
+
+The default image ships with **English** only. To OCR books in other languages, you need two things: the extra language's Tesseract data file, and `OCR_LANGUAGES` set to include it.
+
+### 1. Set the languages
+
+`OCR_LANGUAGES` takes a `+`-joined list of [Tesseract language codes](https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html):
+
+```yaml
+environment:
+  - OCR_LANGUAGES=eng+deu+fra   # English, German, French
+```
+
+Listing multiple languages lets a single page be recognised in any of them, which is useful for mixed-language books. Adding languages you don't need slows OCR down slightly, so keep the list to what you actually have.
+
+### 2. Provide the language data files
+
+The extra languages' `.traineddata` files must be present in the image. You don't need to rebuild — mount them at runtime. Download the files you want from the [tessdata repository](https://github.com/tesseract-ocr/tessdata) (or `tessdata_fast` for smaller, faster files) into a folder on your host, then mount that folder and point Tesseract at it with `TESSDATA_PREFIX`:
+
+```yaml
+services:
+  grimoire:
+    image: hunterreadca/grimoire:latest
+    environment:
+      - OCR_LANGUAGES=eng+deu+fra
+      - TESSDATA_PREFIX=/tessdata
+    volumes:
+      - /path/to/your/library:/library:ro
+      - /path/to/grimoire/data:/data
+      - /path/to/your/tessdata:/tessdata:ro   # holds eng.traineddata, deu.traineddata, fra.traineddata
+```
+
+::: warning Include English
+When you set `TESSDATA_PREFIX`, Tesseract looks **only** in that directory, so include `eng.traineddata` alongside your extra languages even though the image ships with English by default.
+:::
+
+After changing languages or adding data files, trigger a rescan (or restart) so image-only books are re-processed with the new configuration.
+
+## Re-OCR a single book at a higher DPI
+
+`OCR_DPI` sets the render resolution for the whole library, and the default (`150`) is enough for most scans. Occasionally one faint or low-quality book reads better at a higher resolution. Instead of raising the global setting and re-processing everything, you can re-OCR just that one book:
+
+1. Find the scanned book in its game system (it shows an **OCR** or **Image Only** badge).
+2. On the book row, click the **Re-OCR** button (it appears only for OCR'd books, for GM/admin users).
+3. Optionally enter a DPI (for example `300`) and run it. Leave the DPI blank to re-OCR at the global default.
+
+The book's existing search text is cleared and it's re-read in the background at the resolution you chose — the rest of your library is untouched and stays searchable throughout. Progress shows under the OCR phase in the scan status, and the chosen DPI is remembered for that book so it resumes at the same resolution if the server restarts mid-run.
+
+This requires the **GM** or **admin** role, and only applies to scanned/OCR'd books — a book that already has an embedded text layer has nothing to re-OCR.
+
+## Performance and tuning
+
+For large scanned collections, two settings control how fast the OCR queue drains. Full details are on the [Performance](/configuration/performance#ocr) page, but in short:
+
+- **`OCR_CONCURRENCY`** (default `1`) — how many scanned books to OCR at once. Raise it on multi-core hosts with spare memory (each parallel worker typically adds on the order of 50–250 MB of RAM, depending on the scanned page's size and quality, and don't exceed your CPU core count); keep it at `1` on small devices like a Raspberry Pi.
+- **`OCR_DPI`** (default `150`) — how sharp pages are rendered before reading. Lower is faster and lighter; higher can improve results on faint or low-quality scans.
+
+See [Environment Variables → OCR](/configuration/env-vars#ocr) for the full list of OCR settings.

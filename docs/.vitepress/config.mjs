@@ -41,6 +41,7 @@ export default defineConfig({
           items: [
             { text: 'Reader', link: '/guide/reader' },
             { text: 'Search', link: '/guide/search' },
+            { text: 'OCR (Scanned Books)', link: '/guide/ocr' },
             { text: 'Audio Library', link: '/guide/audio' },
             { text: 'Campaigns', link: '/guide/campaigns' },
             { text: 'OPDS', link: '/guide/opds' },

@@ -18,7 +18,7 @@ Grimoire indexes every page of every PDF using SQLite FTS5 for fast full-text se
 
 ## Image-only PDFs (OCR)
 
-Scanned books with no embedded text layer show an **Image Only** badge and can't be searched from their text layer alone. The default image bundles the Tesseract OCR engine, so on first scan these are run through OCR and their recognised text is added to the index, and such books then show an **OCR** badge. See [Performance → OCR](/configuration/performance#ocr) to configure or disable it.
+Scanned books with no embedded text layer show an **Image Only** badge and can't be searched from their text layer alone. The default image bundles the Tesseract OCR engine, so these are run through OCR in the background and their recognised text is added to the index, after which such books show an **OCR** badge. See the [OCR guide](/guide/ocr) for how it works, adding languages, and using the slim (no-OCR) image, or [Performance → OCR](/configuration/performance#ocr) for tuning.
 
 ## Indexing
 
