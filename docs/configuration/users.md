@@ -29,12 +29,12 @@ Drop a `users.json` file into your data directory before first start and Grimoir
 |---|---|---|
 | `username` | Yes | Login username |
 | `password` | Yes | Plaintext password **or** a pre-hashed `$bcrypt-sha256$` string |
-| `role` | No | `admin`, `gm`, or `player` — defaults to `player` |
-| `denyExplicit` | No | `true` to restrict explicit content — defaults to `false` |
+| `role` | No | `admin`, `gm`, or `player`: defaults to `player` |
+| `denyExplicit` | No | `true` to restrict explicit content; defaults to `false` |
 
 ## Rules
 
-- At least one entry must have `"role": "admin"` — the file is rejected otherwise.
+- At least one entry must have `"role": "admin"`: the file is rejected otherwise.
 - Entries whose username already exists are silently skipped.
 - On parse or validation errors the file is left untouched so you can fix and restart.
 

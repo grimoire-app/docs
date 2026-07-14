@@ -20,8 +20,8 @@ Grimoire reads [OPF](https://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm) sidecar 
 
 The scanner checks two locations per book, in priority order:
 
-1. **`<bookname>.opf`** — a sidecar file with the same stem as the PDF, in the same directory
-2. **`metadata.opf`** — a file named `metadata.opf` in the same directory (Calibre's per-book-folder format)
+1. **`<bookname>.opf`**: a sidecar file with the same stem as the PDF, in the same directory
+2. **`metadata.opf`**: a file named `metadata.opf` in the same directory (Calibre's per-book-folder format)
 
 ## Calibre layout
 

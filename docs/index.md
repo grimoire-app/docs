@@ -43,7 +43,7 @@ features:
     details: Each user can generate a personal OPDS feed URL to connect e-reader apps directly to their library.
   - icon: 🔐
     title: OpenID Connect
-    details: Delegate authentication to any OIDC-compliant identity provider — Authentik, Keycloak, Auth0, and more.
+    details: Delegate authentication to any OIDC-compliant identity provider: Authentik, Keycloak, Auth0, and more.
   - icon: 🐳
     title: Docker Ready
     details: One command to run. Mount your library directory, set a secret key, done.

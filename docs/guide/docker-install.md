@@ -1,16 +1,16 @@
 # Getting Started with Docker
 
-This guide is for people who have never used Docker before. It walks you through installing Docker and running Grimoire — no technical background required.
+This guide is for people who have never used Docker before. It walks you through installing Docker and running Grimoire, no technical background required.
 
 ::: info Local access only
-This guide sets up Grimoire for local access — you can use it from your own computer and other devices on your home network. Making it accessible outside your network requires additional steps (port forwarding, VPN, reverse proxy) that are outside this guide's scope.
+This guide sets up Grimoire for local access. You can use it from your own computer and other devices on your home network. Making it accessible outside your network requires additional steps (port forwarding, VPN, reverse proxy) that are outside this guide's scope.
 :::
 
 ## What is Docker?
 
-Docker lets you run applications in a self-contained package called a **container**. You don't need to install Python, configure databases, or set up servers — Docker handles all of that. Installing Docker is the only technical step required.
+Docker lets you run applications in a self-contained package called a **container**. You don't need to install Python, configure databases, or set up servers. Docker handles all of that. Installing Docker is the only technical step required.
 
-## Step 1 — Install Docker
+## Step 1: Install Docker
 
 ### Windows
 
@@ -47,12 +47,12 @@ If you see a message about enabling virtualization, search for your computer mod
    docker run hello-world
    ```
 
-## Step 2 — Create your folders
+## Step 2: Create your folders
 
 Create two folders somewhere on your computer:
 
-- **Library** — your PDFs, maps, and tokens (e.g. `Documents/grimoire/library`)
-- **Data** — app database and thumbnails (e.g. `Documents/grimoire/data`)
+- **Library**: your PDFs, maps, and tokens (e.g. `Documents/grimoire/library`)
+- **Data**: app database and thumbnails (e.g. `Documents/grimoire/data`)
 
 Inside `library/`, create:
 
@@ -73,9 +73,9 @@ library/books/
         └── Dungeon Masters Guide.pdf
 ```
 
-## Step 3 — Create the compose file
+## Step 3: Create the compose file
 
-Use the **[Compose Generator](/compose-generator)** to build your `docker-compose.yml` with your paths and a generated secret key already filled in — then just download and run it.
+Use the **[Compose Generator](/compose-generator)** to build your `docker-compose.yml` with your paths and a generated secret key already filled in, then just download and run it.
 
 Or create a file called `docker-compose.yml` manually and paste in:
 
@@ -115,7 +115,7 @@ volumes:
 
 Replace the `SECRET_KEY` value with any long random string (you can mash your keyboard or use `openssl rand -hex 32`).
 
-## Step 4 — Run Grimoire
+## Step 4: Run Grimoire
 
 Open a terminal in your Grimoire folder and run:
 
@@ -133,7 +133,7 @@ The image ships a `HEALTHCHECK` that probes `GET /api/health`, so `docker ps` sh
 The default `latest` tag bundles the Tesseract OCR engine so scanned, image-only PDFs are searchable. For a smaller image without OCR, use the matching `-slim` tag (e.g. `hunterreadca/grimoire:slim`). See [OCR](/configuration/performance#ocr).
 :::
 
-## Step 5 — Create your admin account
+## Step 5: Create your admin account
 
 On first visit you'll be prompted to create an admin account. Pick a username and password.
 
@@ -149,7 +149,7 @@ Grimoire will start indexing your library in the background. You can already bro
 - Change `"9481:9481"` to `"9482:9481"` in the compose file and access the app at `localhost:9482`.
 
 **My PDFs are not showing up**
-- Double-check the volume path in `docker-compose.yml` — make sure it points to the right folder.
+- Double-check the volume path in `docker-compose.yml`: make sure it points to the right folder.
 - After adding new files, use **Rescan** in the Grimoire sidebar.
 
 **Windows: Docker says WSL 2 is not installed**

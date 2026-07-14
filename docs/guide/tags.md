@@ -26,12 +26,12 @@ Values are arrays of tag strings.
 
 ## Placement
 
-- In any `maps/` folder or subfolder — tags maps and folders
-- In any `tokens/` folder or subfolder — tags tokens and folders
-- In a game system folder under `books/` — tags the system itself
+- In any `maps/` folder or subfolder: tags maps and folders
+- In any `tokens/` folder or subfolder: tags tokens and folders
+- In a game system folder under `books/`: tags the system itself
 
 ## Behaviour
 
 Tags are applied (or overwritten) every time the library is rescanned. Tags set via the web UI are **replaced** by the values in `tags.json` on the next scan.
 
-To stop managing tags via file, remove the `tags.json` entry for that item — then the UI-set tags will persist across rescans.
+To stop managing tags via file, remove the `tags.json` entry for that item, and the UI-set tags will persist across rescans.

@@ -39,7 +39,7 @@ Grimoire expects a `books/` subfolder at the root of the library mount:
 
 If your PDFs live directly under the mounted folder without a `books/` subfolder, the scanner finds nothing.
 
-**Fix** — mount your folder directly as `/app/library/books`:
+**Fix**: mount your folder directly as `/app/library/books`:
 
 ```yaml
 volumes:
@@ -50,7 +50,7 @@ volumes:
 This keeps your existing host structure without adding an extra `books/` folder. Restart the stack and trigger a rescan.
 
 ::: info
-**Cleanup missing** removes database records for files that can't be found at their expected paths. If you moved files before fixing the mount, those records were removed — re-mounting correctly and rescanning will re-add everything.
+**Cleanup missing** removes database records for files that can't be found at their expected paths. If you moved files before fixing the mount, those records were removed; re-mounting correctly and rescanning will re-add everything.
 :::
 
 ---

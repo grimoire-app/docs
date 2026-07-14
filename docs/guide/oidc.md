@@ -6,7 +6,7 @@ Grimoire supports authentication via any OpenID Connect–compliant identity pro
 
 Open **Settings → Authentication** as an admin:
 
-1. Set the **Issuer URL** and click **Autopopulate** — Grimoire fetches the IdP's `.well-known/openid-configuration` and fills in the endpoint URLs. You can also paste the full discovery document URL directly.
+1. Set the **Issuer URL** and click **Autopopulate**: Grimoire fetches the IdP's `.well-known/openid-configuration` and fills in the endpoint URLs. You can also paste the full discovery document URL directly.
 2. Paste the **Client ID** and **Client Secret** from your IdP.
 3. Register the displayed **Redirect URI** with your IdP. Set `BASE_URL` so the host reflects your public origin:
    ```

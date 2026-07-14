@@ -33,7 +33,7 @@ See [Library Structure](/guide/library-structure) for the full layout and catego
 Use the **[Compose Generator](/compose-generator)** to build a tailored `docker-compose.yml` for your setup, or copy one of the ready-made examples:
 
 ```bash
-# Minimal — no extras
+# Minimal (no extras)
 curl -O https://raw.githubusercontent.com/hunter-read/grimoire/main/docs/docker/docker-compose.yml
 
 # With Valkey page cache (recommended for large libraries)

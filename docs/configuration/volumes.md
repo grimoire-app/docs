@@ -4,7 +4,7 @@ Grimoire needs two volume mounts:
 
 ```yaml
 volumes:
-  # Your library — read-only is safe and recommended
+  # Your library: read-only is safe and recommended
   - /path/to/your/library:/app/library:ro
 
   # Persistent data (database, thumbnails, page cache)
@@ -30,10 +30,10 @@ To use Filebrowser Quantum or Calibre alongside Grimoire to manage files, those 
 
 Grimoire stores all persistent data here:
 
-- `grimoire.db` — SQLite database (users, metadata, bookmarks, campaigns)
-- `grimoire.fts.db` — full-text search index
-- `thumbnails/` — generated book cover thumbnails
-- `page_cache/` — rendered PDF page images (when Valkey is not used)
+- `grimoire.db`: SQLite database (users, metadata, bookmarks, campaigns)
+- `grimoire.fts.db`: full-text search index
+- `thumbnails/`: generated book cover thumbnails
+- `page_cache/`: rendered PDF page images (when Valkey is not used)
 
 **Back this directory up** to preserve your metadata, user accounts, and bookmarks.
 

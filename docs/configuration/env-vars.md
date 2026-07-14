@@ -13,14 +13,14 @@
 | `WORKERS` | `2` | Number of uvicorn worker processes. 2–4 is typical; more workers = more memory. |
 | `LIBRARY_PATH` | `/app/library` | Path to the library directory inside the container. |
 | `DATA_PATH` | `/app/data` | Path for the database, thumbnails, and search cache inside the container. |
-| `BASE_URL` | `http://localhost:9481` | Public base URL of this instance. Set to your external URL when running behind a reverse proxy — used for OPDS feed links and OIDC redirect URIs. |
+| `BASE_URL` | `http://localhost:9481` | Public base URL of this instance. Set to your external URL when running behind a reverse proxy; used for OPDS feed links and OIDC redirect URIs. |
 | `LOG_LEVEL` | `info` | Console log verbosity: `debug`, `info`, `warning`, `error`, `critical`. The in-app Logs tab always captures `debug`-level entries regardless of this setting. |
 
 ## Optional features
 
 | Variable | Default | Description |
 |---|---|---|
-| `VALKEY_URL` | — | Redis-compatible cache URL for rendered page images (e.g. `redis://valkey:6379/0`). Falls back to disk cache when unset. Also shares auth rate-limit counters across replicas — see [Security](/configuration/security). |
+| `VALKEY_URL` | _none_ | Redis-compatible cache URL for rendered page images (e.g. `redis://valkey:6379/0`). Falls back to disk cache when unset. Also shares auth rate-limit counters across replicas; see [Security](/configuration/security). |
 | `OPDS_ENABLED` | `false` | Set to `true` to enable the OPDS catalog. |
 
 ## OCR
@@ -69,6 +69,6 @@ Each OIDC setting can be pinned via environment variable. Pinned values are show
 | `OIDC_BUTTON_TEXT` | Label for the SSO button on the login page. |
 | `OIDC_GROUPS_CLAIM` | Name of the claim containing group memberships. |
 | `OIDC_PERMISSIONS_CLAIM` | Name of the claim containing a permissions object. |
-| `OIDC_MATCH_BY` | `none`, `email`, or `username` — how to link existing accounts on first OIDC login. |
+| `OIDC_MATCH_BY` | `none`, `email`, or `username`: how to link existing accounts on first OIDC login. |
 | `OIDC_AUTO_LAUNCH` | Automatically redirect to the IdP when visiting `/login`. |
 | `OIDC_AUTO_REGISTER` | Automatically create local accounts on first OIDC login. |

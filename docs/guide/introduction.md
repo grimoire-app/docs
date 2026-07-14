@@ -4,7 +4,7 @@ Grimoire is a self-hosted web application for managing your tabletop RPG PDF col
 
 ## What it does
 
-- **Organizes** your PDFs by game system and category, derived automatically from your folder structure — no manual tagging required to get started
+- **Organizes** your PDFs by game system and category, derived automatically from your folder structure, with no manual tagging required to get started
 - **Indexes** every page of every PDF for full-text search using SQLite FTS5, including OCR of image-only scanned PDFs
 - **Renders** PDF pages server-side as WebP images so the reader is fast even on mobile
 - **Tracks** maps, tokens, audio, and archive files alongside books in the same library, with a persistent global audio player
@@ -12,7 +12,7 @@ Grimoire is a self-hosted web application for managing your tabletop RPG PDF col
 
 ## What it does not do
 
-Grimoire is a **read-only viewer**. It never modifies the files in your library folder. Adding, removing, or reorganizing files is done with whatever tool you prefer — a file manager, Calibre, Filebrowser Quantum, or just your OS. After making changes, trigger a **Rescan** in the Grimoire UI to pick them up.
+Grimoire is a **read-only viewer**. It never modifies the files in your library folder. Adding, removing, or reorganizing files is done with whatever tool you prefer: a file manager, Calibre, Filebrowser Quantum, or just your OS. After making changes, trigger a **Rescan** in the Grimoire UI to pick them up.
 
 ## Stack
 

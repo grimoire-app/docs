@@ -4,13 +4,13 @@ Grimoire renders PDF pages server-side as WebP images, keeping the viewer fast o
 
 ## Features
 
-- **Page-by-page navigation** — swipe or use arrow keys
+- **Page-by-page navigation**: swipe or use arrow keys
 - **Pinch-to-zoom** on mobile
-- **Spread mode** — display two pages side-by-side (even/odd offset toggle)
-- **Table of contents** — jump directly to any chapter
-- **Bookmarks** — save page bookmarks or text-selection highlights, with inline highlight overlay
-- **Native PDF viewer** — switch to the browser's built-in PDF viewer any time via the toolbar
-- **Download** — download the original PDF file
+- **Spread mode**: display two pages side-by-side (even/odd offset toggle)
+- **Table of contents**: jump directly to any chapter
+- **Bookmarks**: save page bookmarks or text-selection highlights, with inline highlight overlay
+- **Native PDF viewer**: switch to the browser's built-in PDF viewer any time via the toolbar
+- **Download**: download the original PDF file
 
 ## Performance
 

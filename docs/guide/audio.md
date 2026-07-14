@@ -1,6 +1,6 @@
 # Audio Library
 
-Grimoire browses ambient tracks, soundscapes, music, and sound effects alongside your books, maps, and tokens — with in-browser playback and a persistent player that keeps playing while you navigate.
+Grimoire browses ambient tracks, soundscapes, music, and sound effects alongside your books, maps, and tokens, with in-browser playback and a persistent player that keeps playing while you navigate.
 
 ## Folder layout
 

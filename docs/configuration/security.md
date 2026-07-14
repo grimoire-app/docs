@@ -21,7 +21,7 @@ The default is **`10/minute`** per IP; exceeding it returns HTTP `429`.
 
 ### Behind a reverse proxy
 
-By default (`TRUST_FORWARDED_FOR=true`) the limiter keys on the left-most `X-Forwarded-For` address, so each real client — not the proxy — gets its own bucket. Make sure your proxy sets `X-Forwarded-For`.
+By default (`TRUST_FORWARDED_FOR=true`) the limiter keys on the left-most `X-Forwarded-For` address, so each real client, not the proxy, gets its own bucket. Make sure your proxy sets `X-Forwarded-For`.
 
 ::: warning Direct exposure
 If Grimoire is exposed directly with no trusted proxy in front, set `TRUST_FORWARDED_FOR=false`. Otherwise a client could spoof `X-Forwarded-For` to sidestep the limit.
@@ -37,10 +37,10 @@ Every response carries:
 
 | Header | Value |
 |---|---|
-| `Content-Security-Policy` | Scoped to what the SPA actually loads — own scripts, inline styles used by React, Google Fonts, and `data:`/`blob:` images for rendered pages. Includes `frame-ancestors 'none'`. |
+| `Content-Security-Policy` | Scoped to what the SPA actually loads: own scripts, inline styles used by React, Google Fonts, and `data:`/`blob:` images for rendered pages. Includes `frame-ancestors 'none'`. |
 | `X-Content-Type-Options` | `nosniff` |
 | `X-Frame-Options` | `DENY` (matching the CSP `frame-ancestors 'none'`) |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
-| `Strict-Transport-Security` | Emitted **only when the request is HTTPS** — directly or via `X-Forwarded-Proto: https` from your TLS-terminating proxy — so it is never sent over plain HTTP. |
+| `Strict-Transport-Security` | Emitted **only when the request is HTTPS**: directly or via `X-Forwarded-Proto: https` from your TLS-terminating proxy, so it is never sent over plain HTTP. |
 
 These are on by default and require no configuration. If you terminate TLS at a reverse proxy, make sure it forwards `X-Forwarded-Proto: https` so HSTS is emitted correctly. See [Reverse Proxy](/deployment/reverse-proxy).

@@ -11,7 +11,7 @@
         </label>
       </div>
       <p v-if="form.runtime === 'quadlet'" class="cg-note">
-        Quadlets generate systemd <code>.container</code> unit files — the recommended rootless Podman deployment.
+        Quadlets generate systemd <code>.container</code> unit files: the recommended rootless Podman deployment.
         One file per service, placed in <code>~/.config/containers/systemd/</code>.
       </p>
     </section>
@@ -57,7 +57,7 @@
     <!-- Secret key -->
     <section class="cg-section">
       <h2>Secret key</h2>
-      <p class="cg-desc">Used to sign JWT tokens. Must be a long random string — keep it private.</p>
+      <p class="cg-desc">Used to sign JWT tokens. Must be a long random string; keep it private.</p>
       <div class="cg-input-row">
         <input
           :type="showSecret ? 'text' : 'password'"
@@ -80,7 +80,7 @@
       <div class="cg-field">
         <label>
           Base URL
-          <span class="cg-hint">(set this when running behind a reverse proxy — used for OPDS and OIDC redirect URIs)</span>
+          <span class="cg-hint">(set this when running behind a reverse proxy; used for OPDS and OIDC redirect URIs)</span>
         </label>
         <input v-model="form.baseUrl" placeholder="https://grimoire.example.com" />
       </div>
@@ -198,7 +198,7 @@ const runtimes = [
 const fileManagers = [
   { value: 'none', label: 'None', desc: 'Manage files manually via SSH, SFTP, or your OS' },
   { value: 'filebrowser', label: 'Filebrowser Quantum', desc: 'Lightweight browser-based file manager (port 8080)' },
-  { value: 'calibre', label: 'Calibre', desc: 'Full Calibre desktop via noVNC — metadata editing + OPF export (port 8080)' },
+  { value: 'calibre', label: 'Calibre', desc: 'Full Calibre desktop via noVNC: metadata editing + OPF export (port 8080)' },
   { value: 'calibre-web', label: 'Calibre-Web', desc: 'Lightweight browser UI for an existing Calibre library (port 8083)' },
 ]
 

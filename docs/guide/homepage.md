@@ -76,7 +76,7 @@ In your Homepage `services.yaml`, add a service with a `customapi` widget:
 ```
 
 Homepage shows up to four fields per row. Pick the four counts that matter most
-to you — for example swap in `game_systems`, `audio`, `indexed_books`, or
+to you, for example swap in `game_systems`, `audio`, `indexed_books`, or
 `total_pages`.
 
 ### Available fields
@@ -94,10 +94,10 @@ to you — for example swap in `game_systems`, `audio`, `indexed_books`, or
 
 ## Notes
 
-- **HTTPS / reverse proxy** — Homepage must be able to reach Grimoire's URL. If
+- **HTTPS / reverse proxy**: Homepage must be able to reach Grimoire's URL. If
   Grimoire is behind a reverse proxy, use its public URL and make sure the
   `X-API-Key` header is forwarded (most proxies pass all headers by default).
-- **Rate limiting** — `/api/stats` is rate limited. A `refreshInterval` of
+- **Rate limiting**: `/api/stats` is rate limited. A `refreshInterval` of
   `60000` (60s) or higher is plenty for a dashboard and stays well within limits.
-- **401 Unauthorized** — the key is wrong, was revoked/regenerated, or the
+- **401 Unauthorized**: the key is wrong, was revoked/regenerated, or the
   header name isn't exactly `X-API-Key`.

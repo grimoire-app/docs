@@ -6,7 +6,7 @@ After adding files with any tool, trigger a **Rescan** in Grimoire (sidebar or S
 
 ## Filebrowser Quantum
 
-[Filebrowser Quantum](https://github.com/gtsteffaniak/filebrowser) is a lightweight, browser-based file manager. Upload PDFs, create folders, rename, move, and delete files — all from a web UI.
+[Filebrowser Quantum](https://github.com/gtsteffaniak/filebrowser) is a lightweight, browser-based file manager. Upload PDFs, create folders, rename, move, and delete files, all from a web UI.
 
 ### Docker Compose
 
@@ -53,7 +53,7 @@ networks:
   grimoire:
 ```
 
-Access Filebrowser at `http://localhost:8080`. Default credentials: `admin` / `admin` — change these immediately.
+Access Filebrowser at `http://localhost:8080`. Default credentials: `admin` / `admin`: change these immediately.
 
 ::: tip Use the Compose Generator
 The **[Compose Generator](/compose-generator)** can build this file with your paths pre-filled.
@@ -61,7 +61,7 @@ The **[Compose Generator](/compose-generator)** can build this file with your pa
 
 ## Calibre
 
-[Calibre](https://calibre-ebook.com/) is a full-featured ebook manager. Its main value here is metadata editing — it writes `.opf` sidecar files that Grimoire reads automatically on the next scan to populate titles, authors, publishers, and tags.
+[Calibre](https://calibre-ebook.com/) is a full-featured ebook manager. Its main value here is metadata editing: it writes `.opf` sidecar files that Grimoire reads automatically on the next scan to populate titles, authors, publishers, and tags.
 
 See [OPF Metadata](/guide/opf-metadata) for the fields Grimoire reads.
 

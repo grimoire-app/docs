@@ -1,6 +1,6 @@
 # grimoire-docs
 
-Documentation site for [Grimoire](https://github.com/hunter-read/grimoire) — a self-hosted TTRPG library manager.
+Documentation site for [Grimoire](https://github.com/hunter-read/grimoire): a self-hosted TTRPG library manager.
 
 Built with [VitePress](https://vitepress.dev/). Includes an interactive Compose Generator (Vue component, fully client-side) for Docker Compose, Podman Compose, and Podman Quadlets.
 

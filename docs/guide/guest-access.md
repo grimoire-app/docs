@@ -1,6 +1,6 @@
 # Guest Access
 
-Guests let you share a single campaign with people who don't have full accounts — for example a player who's only joining one game. A guest is a **code-only account**: no password, no OIDC, and no access to the library, maps, tokens, audio, or search.
+Guests let you share a single campaign with people who don't have full accounts, for example a player who's only joining one game. A guest is a **code-only account**: no password, no OIDC, and no access to the library, maps, tokens, audio, or search.
 
 A guest can only see the campaign they were invited to (and its shared resources, wiki, and schedule), and can edit only their **own** character name, character art, character sheet, session notes, and availability.
 
@@ -8,8 +8,8 @@ A guest can only see the campaign they were invited to (and its shared resources
 
 Guest access is **off by default**. Turn it on either way:
 
-- **In-app** — **Settings → Authentication → Guest Access**.
-- **Pinned via env** — set [`GUEST_ACCESS_ENABLED`](/configuration/env-vars#authentication) to `true` or `false`. When set, it overrides the in-app toggle (shown read-only).
+- **In-app**: **Settings → Authentication → Guest Access**.
+- **Pinned via env**: set [`GUEST_ACCESS_ENABLED`](/configuration/env-vars#authentication) to `true` or `false`. When set, it overrides the in-app toggle (shown read-only).
 
 ## Inviting a guest
 

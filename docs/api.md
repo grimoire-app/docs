@@ -8,8 +8,8 @@ With the server running, the API is self-documented via OpenAPI:
 
 | URL | Description |
 |---|---|
-| `http://localhost:9481/api/docs` | Swagger UI — interactive, try-it-out docs |
-| `http://localhost:9481/api/redoc` | ReDoc — clean, readable reference |
+| `http://localhost:9481/api/docs` | Swagger UI: interactive, try-it-out docs |
+| `http://localhost:9481/api/redoc` | ReDoc: clean, readable reference |
 | `http://localhost:9481/api/openapi.json` | Raw OpenAPI schema |
 
 ---
@@ -44,13 +44,13 @@ Tokens are returned by `/api/auth/login` and expire after **30 days**.
 
 | Endpoint | Method | Auth | Description |
 |---|---|---|---|
-| `/api/auth/status` | GET | — | Returns `{"initialized": bool}` |
-| `/api/auth/config` | GET | — | Public auth config for the login screen |
-| `/api/auth/setup` | POST | — | First-run admin account creation. Body: `{username, password}` |
-| `/api/auth/login` | POST | — | Authenticate. Body: `{username, password}`. Returns `{token, user}` |
+| `/api/auth/status` | GET | None | Returns `{"initialized": bool}` |
+| `/api/auth/config` | GET | None | Public auth config for the login screen |
+| `/api/auth/setup` | POST | None | First-run admin account creation. Body: `{username, password}` |
+| `/api/auth/login` | POST | None | Authenticate. Body: `{username, password}`. Returns `{token, user}` |
 | `/api/auth/me` | GET | any | Current user details |
-| `/api/auth/openid/login` | GET | — | Start OIDC login, redirects to IdP |
-| `/api/auth/openid/callback` | GET | — | OIDC callback |
+| `/api/auth/openid/login` | GET | None | Start OIDC login, redirects to IdP |
+| `/api/auth/openid/callback` | GET | None | OIDC callback |
 | `/api/auth/openid/discover` | POST | admin | Server-side discovery fetch. Body: `{issuer_url}` |
 
 ---
@@ -94,7 +94,7 @@ Tokens are returned by `/api/auth/login` and expire after **30 days**.
 
 `/api/stats` is the only endpoint that accepts the `X-API-Key` header, so it's the safe way to surface library counts on an external dashboard. Generate a key as an admin under **Settings → App Settings → Stats API Key** (regenerate or revoke it there at any time). See the [Homepage Widget guide](/guide/homepage) for a full walkthrough.
 
-**Homepage Custom API widget** — add this to your Homepage `services.yaml` ([Custom API widget docs](https://gethomepage.dev/widgets/services/customapi/)):
+**Homepage Custom API widget**: add this to your Homepage `services.yaml` ([Custom API widget docs](https://gethomepage.dev/widgets/services/customapi/)):
 
 ```yaml
 - Grimoire:
@@ -123,7 +123,7 @@ Tokens are returned by `/api/auth/login` and expire after **30 days**.
           suffix: " GB"
 ```
 
-Homepage shows up to four fields per row; pick the counts you care about from the fields below. Use a `refreshInterval` of 60s or higher — `/api/stats` is rate limited.
+Homepage shows up to four fields per row; pick the counts you care about from the fields below. Use a `refreshInterval` of 60s or higher, `/api/stats` is rate limited.
 
 | Field | Meaning | Suggested `format` |
 |---|---|---|
@@ -134,7 +134,7 @@ Homepage shows up to four fields per row; pick the counts you care about from th
 | `audio` | Total audio tracks | `number` |
 | `indexed_books` | Books with a searchable full-text index | `number` |
 | `total_pages` | Sum of all book page counts | `number` |
-| `total_size_mb` | Total library size in MB | `float` — add `scale: 0.001` + `suffix: " GB"` to show GB |
+| `total_size_mb` | Total library size in MB | `float`, add `scale: 0.001` + `suffix: " GB"` to show GB |
 
 ---
 
@@ -343,7 +343,7 @@ Statuses: `available`, `tentative`, `unavailable`
 |---|---|
 | `400` | Bad request / business rule violated |
 | `401` | Not authenticated |
-| `403` | Forbidden — insufficient role |
+| `403` | Forbidden, insufficient role |
 | `404` | Not found |
-| `409` | Conflict — duplicate resource |
+| `409` | Conflict, duplicate resource |
 | `422` | Request body failed schema validation |

@@ -25,7 +25,7 @@ The default tags (`latest`, `1.5.0`, …) bundle the Tesseract OCR engine so ima
 
 ## Database migrations
 
-Schema changes are applied automatically on startup via [Alembic](https://alembic.sqlalchemy.org/) — **no manual action is required** when upgrading, including from versions that predate Alembic. On first run under the new system, an existing database is detected and stamped at the correct baseline, so only genuinely new migrations run thereafter.
+Schema changes are applied automatically on startup via [Alembic](https://alembic.sqlalchemy.org/): **no manual action is required** when upgrading, including from versions that predate Alembic. On first run under the new system, an existing database is detected and stamped at the correct baseline, so only genuinely new migrations run thereafter.
 
 Your data volume (database, thumbnails, search index, user accounts) is stored separately and is not affected by pulling a new image. Back up `DATA_PATH` before upgrading, as always.
 

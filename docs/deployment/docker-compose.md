@@ -1,6 +1,6 @@
 # Docker Compose
 
-The fastest way to get a working compose file is the **[Compose Generator](/compose-generator)** — it fills in your paths, generates a secret key, and lets you download the file directly.
+The fastest way to get a working compose file is the **[Compose Generator](/compose-generator)**: it fills in your paths, generates a secret key, and lets you download the file directly.
 
 ## Minimal setup
 
