@@ -15,6 +15,7 @@
 | `DATA_PATH` | `/app/data` | Path for the database, thumbnails, and search cache inside the container. |
 | `BASE_URL` | `http://localhost:9481` | Public base URL of this instance. Set to your external URL when running behind a reverse proxy; used for OPDS feed links and OIDC redirect URIs. |
 | `LOG_LEVEL` | `info` | Console log verbosity: `debug`, `info`, `warning`, `error`, `critical`. The in-app Logs tab always captures `debug`-level entries regardless of this setting. |
+| `TZ` | `UTC` | Timezone for all log timestamps (console output and the in-app Logs tab). Use an IANA zone name such as `America/Toronto` or `Europe/Berlin`. Defaults to UTC when unset; an unknown zone name logs a warning and uses UTC. |
 
 ## Optional features
 
@@ -22,6 +23,12 @@
 |---|---|---|
 | `VALKEY_URL` | _none_ | Redis-compatible cache URL for rendered page images (e.g. `redis://valkey:6379/0`). Falls back to disk cache when unset. Also shares auth rate-limit counters across replicas; see [Security](/configuration/security). |
 | `OPDS_ENABLED` | `false` | Set to `true` to enable the OPDS catalog. |
+
+## Library scanning
+
+| Variable | Description |
+|---|---|
+| `DISABLE_FOLDER_CATEGORY_INFERENCE` | `true` or `false`. When set, pins folder-name category inference on or off, overriding the in-app toggle (which is shown read-only). When `true`, books are not auto-assigned a category from their folder names and fall back to `uncategorized`. Leave unset to control it from **Settings → Maintenance**. To disable inference for a single game system only, drop an empty `.no-auto-category` file at that system's folder root. |
 
 ## OCR
 

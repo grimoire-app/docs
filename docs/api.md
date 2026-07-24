@@ -158,6 +158,7 @@ Homepage shows up to four fields per row; pick the counts you care about from th
 | `/api/books/:id` | GET | any | Book detail |
 | `/api/books/:id` | PATCH | gm/admin | Update book metadata |
 | `/api/books/:id/reindex` | POST | gm/admin | Re-run OCR on a scanned book. Optional query `ocr_dpi` (72–600) re-reads it at a higher resolution than the global `OCR_DPI`. Clears the search index and re-queues the book (OCR runs in the background). 400 for books with an embedded text layer. |
+| `/api/books/:id/rescan` | POST | gm/admin | Re-read a single book from disk and rebuild its search index, for a file edited externally. Works for any PDF: a text-layer book is re-extracted; an image-only book is re-queued for OCR. Refreshes page count and thumbnail. Runs in the background; no-ops if a library scan is already running. 400 for non-PDFs. |
 | `/api/books/:id/file` | GET | any | Download/stream the file |
 | `/api/books/:id/thumbnail` | GET | any | WebP cover thumbnail |
 | `/api/books/:id/toc` | GET | any | PDF table of contents |

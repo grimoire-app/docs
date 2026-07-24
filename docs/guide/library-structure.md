@@ -51,6 +51,17 @@ Files placed directly in a system folder (not in a subfolder) default to the **C
 Any unrecognized subfolder name becomes its own category, slugified from the folder name, so `Bestiary` becomes the `bestiary` category.
 :::
 
+### Disabling category inference
+
+If you organize your folders differently and don't want Grimoire deriving categories from folder names, you can turn the behavior off. When inference is disabled, books fall back to the neutral `uncategorized` category (any category you set in the web UI is still respected).
+
+There are two ways to disable it, applied in this order of precedence:
+
+1. **Globally** — turn it off for the whole library in **Settings → Maintenance → Folder Category Inference**, or pin it with the [`DISABLE_FOLDER_CATEGORY_INFERENCE`](/configuration/env-vars#library-scanning) environment variable. When the env var is set, the in-app toggle shows the effective value read-only.
+2. **Per game system** — place an empty file named `.no-auto-category` at a system's folder root (e.g. `books/My System/.no-auto-category`) to disable inference for just that system while leaving the rest of the library on the default behavior.
+
+The change takes effect on the next scan of the affected books.
+
 ### Subfolder groups
 
 Any category folder can contain named subfolders to group related books. Grimoire detects these automatically and displays them as collapsible groups, with no configuration needed.
@@ -121,6 +132,39 @@ audio/
 ```
 
 Supported formats: `.mp3`, `.ogg`, `.opus`, `.flac`, `.wav`, `.m4a`, `.aac`. Duration and embedded title/artist/album tags are read on scan. See the [Audio Library](/guide/audio) guide for playback and the global player.
+
+## Ignoring files
+
+To keep files on disk but out of Grimoire, add a `.grimoireignore` file. It uses the same syntax as `.gitignore` or `.dockerignore`, so anything matched by a rule is skipped by the scanner and never shown in the UI. This is handy when a book ships extra print variants — black-and-white single-page versions, zine-sized layouts — that you want kept alongside the book but hidden from the library.
+
+Place `.grimoireignore` at your **library root** to apply rules everywhere, or in any subfolder to add rules for just that subtree. Rules are cumulative and nested, exactly like git.
+
+```
+library/
+├── .grimoireignore              ← applies to the whole library
+└── books/
+    └── Example TTRPG/
+        ├── core/
+        │   └── Players Handbook.pdf
+        └── ignore/               ← ignored: this folder is skipped
+            ├── Players Handbook BW Single Pages.pdf
+            └── Players Handbook Zine-sized.pdf
+```
+
+A `.grimoireignore` with:
+
+```
+# Skip an entire folder
+ignore/
+
+# Skip print variants anywhere in the library
+*BW Single Pages*.pdf
+*Zine-sized*.pdf
+```
+
+Patterns support the full gitignore dialect, including `!` to re-include a previously excluded file and `**` for arbitrary-depth matching. Rules apply to every collection — `books/`, `maps/`, `tokens/`, and `audio/`.
+
+Changes take effect on the next scan. If you add a rule that matches a file Grimoire already indexed, that item is marked missing and hidden on the next rescan; remove the rule and rescan to bring it back.
 
 ## Rescanning
 

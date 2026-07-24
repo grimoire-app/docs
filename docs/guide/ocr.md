@@ -76,12 +76,23 @@ After changing languages or adding data files, trigger a rescan (or restart) so 
 `OCR_DPI` sets the render resolution for the whole library, and the default (`150`) is enough for most scans. Occasionally one faint or low-quality book reads better at a higher resolution. Instead of raising the global setting and re-processing everything, you can re-OCR just that one book:
 
 1. Find the scanned book in its game system (it shows an **OCR** or **Image Only** badge).
-2. On the book row, click the **Re-OCR** button (it appears only for OCR'd books, for GM/admin users).
+2. On the book, open the **actions menu** (the ⋮ button) and choose **Re-OCR…** (it appears only for OCR'd books, for GM/admin users).
 3. Optionally enter a DPI (for example `300`) and run it. Leave the DPI blank to re-OCR at the global default.
 
 The book's existing search text is cleared and it's re-read in the background at the resolution you chose — the rest of your library is untouched and stays searchable throughout. Progress shows under the OCR phase in the scan status, and the chosen DPI is remembered for that book so it resumes at the same resolution if the server restarts mid-run.
 
-This requires the **GM** or **admin** role, and only applies to scanned/OCR'd books — a book that already has an embedded text layer has nothing to re-OCR.
+This requires the **GM** or **admin** role, and only applies to scanned/OCR'd books. A book that already has an embedded text layer has nothing to re-OCR — but if you edited such a PDF externally and need Grimoire to pick up the new content, use **Re-scan & re-index** from the same actions menu instead (see below).
+
+## Re-scan &amp; re-index a single book
+
+When you edit a PDF in place — embedding encounter notes, adding errata, or otherwise changing its text — Grimoire's search index for that book goes stale until the next full library rescan. Instead of rescanning everything, you can re-read just that one file:
+
+1. Find the book in its game system.
+2. Open the **actions menu** (the ⋮ button) and choose **Re-scan &amp; re-index**.
+
+The file is re-read from disk in the background: its page count and cover thumbnail are refreshed if they changed, its old search rows are cleared, and its text is re-extracted and re-indexed. A book that has become image-only is automatically handed to the OCR queue. Progress shows in the scan status.
+
+This requires the **GM** or **admin** role and applies to any PDF. (For scanned/OCR'd books the menu offers **Re-OCR…** instead, described above.)
 
 ## Performance and tuning
 
